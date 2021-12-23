@@ -1,5 +1,6 @@
 package ru.gb.gbrest.rest;
 
+import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -29,5 +30,11 @@ public class ExceptionHandlerController {
                 });
 
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
+
+    @ExceptionHandler(FeignException.class)
+    public ResponseEntity<?> noEntity(FeignException e) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
